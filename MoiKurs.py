@@ -35,7 +35,7 @@ def moikurs(message):
     x = True
     try:
         kursP = float(html[(html.find('Время обновления</th></tr><tr><td class="title"><a href="/currency/usd">Доллар</a></td><td>')+91):(html.find('Время обновления</th></tr><tr><td class="title"><a href="/currency/usd">Доллар</a></td><td>') + 96)])
-        kursP -= 4.35
+        kursP -= 5.4
         raznica = abs(kursP - 65.72)
         if kursP > 65.72:
             bot.send_message(message.chat.id, str(kursP) + '(+' + str(round(raznica, 2)) + ')')
