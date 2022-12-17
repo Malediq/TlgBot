@@ -50,13 +50,13 @@ def add_event(message):
     # 11 11 пн(вт,ср,чт,пт,сб,вс) Event
     # 012345678901234567
     # 2022-10-24 18:35:25.365862
-    resultd = re.findall(r'\d{1,2}[ ./]\d{1,2}[ ./]\d{4}|\d{1,2}[./]\d{1,2}|завтра|Завтра|Понедельник|Вторник|Среда|Четверг|Пятница|Суббота|Воскресенье|понедельник|вторник|среда|четверг|пятница|суббота|воскресенье|пн|вт|ср|чт|пт|сб|вс|Пн|Вт|Ср|Чт|Пт|Сб|Вс', message.text)
+    resultd = re.findall(r'\d{1,2}[./]\d{1,2}[./]\d{4}|\d{1,2}[./]\d{1,2}|завтра|Завтра|Понедельник|Вторник|Среда|Четверг|Пятница|Суббота|Воскресенье|понедельник|вторник|среда|четверг|пятница|суббота|воскресенье|пн|вт|ср|чт|пт|сб|вс|Пн|Вт|Ср|Чт|Пт|Сб|Вс', message.text)
     if re.match(r'завтра|Завтра|Понедельник|Вторник|Среда|Четверг|Пятница|Суббота|Воскресенье|понедельник|вторник|среда|четверг|пятница|суббота|воскресенье|пн|вт|ср|чт|пт|сб|вс|Пн|Вт|Ср|Чт|Пт|Сб|Вс', resultd[0]):
         mydate = day_week(resultd[0])
         myyear = mydate[0:4]
         mymounth = mydate[5:7]
         myday = mydate[8:10]
-    elif re.match(r'\d{1,2}[ ./]\d{1,2}[ ./]\d{4}', resultd[0]):
+    elif re.match(r'\d{1,2}[./]\d{1,2}[./]\d{4}', resultd[0]):
         mydate = re.split(r'[ ./-]', resultd[0])
         myyear = mydate[2]
         mymounth = mydate[1]
@@ -72,8 +72,8 @@ def add_event(message):
             myday = '0' + myday
     else: None
     # ищем время myminute, myhour
-    resultt = re.findall(r'\d{1,2}[ :-]\d{1,2}', message.text)
-    mytime = re.split(r'[ :-]', resultt[0])
+    resultt = re.findall(r'\d{1,2}[:-]\d{1,2}', message.text)
+    mytime = re.split(r'[:-]', resultt[0])
     myhour = mytime[0]
     if int(myhour) < 10 and len(myhour) < 2:
         myhour = '0' + myhour
@@ -82,7 +82,7 @@ def add_event(message):
         myminute = '0' + myminute
     resdel = re.split(resultd[0], message.text)
     resdel = ' '.join(resdel)
-    resdel = re.split(r'\d{1,2}[ :-]\d{1,2}', resdel)
+    resdel = re.split(r'\d{1,2}[:-]\d{1,2}', resdel)
     delo = resdel[1]
     list = []
     try:

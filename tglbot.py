@@ -31,19 +31,23 @@ def handle_text(message):
             if elapsed < 1:
                 time.sleep(1 - elapsed)
     elif message.text == 'Помощь':
+        bot.send_message(message.chat.id, 'Вот что я умею, милорд')
         bot.send_message(message.chat.id, text_help)
     elif message.text == 'Мои события':
+        bot.send_message(message.chat.id, 'Ваш список дел, милорд')
         my_events(message)
     elif message.text == 'Маски':
+        bot.send_message(message.chat.id, 'Как прикажете, милорд')
         bot.send_message(message.chat.id, text_maski)
     elif message.text[0:7] == 'Удалить' or message.text[0:7] == 'удалить':
         rm_event(message)
         bot.send_message(message.chat.id, 'Событие удалено, милорд')
-    elif re.search(r'\d{1,2}[ :-]\d{1,2}', message.text) and re.search(r'\d{1,2}[ ./-]\d{1,2}[ ./-]\d{4}|\d{1,2}[.]\d{1,2}|завтра|Завтра|Понедельник|Вторник|Среда|Четверг|Пятница|Суббота|Воскресенье|понедельник|вторник|среда|четверг|пятница|суббота|воскресенье|пн|вт|ср|чт|пт|сб|вс|Пн|Вт|Ср|Чт|Пт|Сб|Вс', message.text):
+    elif re.search(r'\d{1,2}[ :-]\d{1,2}', message.text) and re.search(r'\d{1,2}[./-]\d{1,2}[./-]\d{4}|\d{1,2}[.]\d{1,2}|завтра|Завтра|Понедельник|Вторник|Среда|Четверг|Пятница|Суббота|Воскресенье|понедельник|вторник|среда|четверг|пятница|суббота|воскресенье|пн|вт|ср|чт|пт|сб|вс|Пн|Вт|Ср|Чт|Пт|Сб|Вс', message.text):
         add_event(message)
         bot.send_message(message.chat.id, 'Событие добавлено, милорд')
     elif re.match(r'\d{1,3}[.]\d{1,3}[.]\d{1,3}[.]\d{1,3}/\d{1,2}', message.text):
         text = ipcalc(message)
+        bot.send_message(message.chat.id, 'Данные, милорд')
         bot.send_message(message.chat.id, text)
     else:
         bot.send_message(message.chat.id, 'Как скажете, милорд')

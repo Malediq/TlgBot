@@ -15,12 +15,12 @@ def moikurs(message):
         raznica = abs(kursP - 65.72)
         if kursP > 65.72:
             bot.send_message(message.chat.id, str(kursP) + '(+' + str(round(raznica, 2)) + ')')
-            bot.send_message(message.chat.id, 'Прибыль составит:\t' + str(round(raznica, 2) * 1111))
+            bot.send_message(message.chat.id, 'Крестьяне зарабатывают деньги, милорд:\t' + str(round(raznica, 2) * 1111))
         elif kursP == 65.72:
             bot.send_message(message.chat.id, kursP)
         else:
             bot.send_message(message.chat.id, str(kursP) + '(-' + str(round(raznica, 2)) + ')')
-            bot.send_message(message.chat.id, 'Убыток составит: ' + str(round(raznica, 2) * 1111))
+            bot.send_message(message.chat.id, 'Казна пустеет, милорд: ' + str(round(raznica, 2) * 1111))
         x=False
     except:
         x=x
