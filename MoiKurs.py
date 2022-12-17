@@ -4,7 +4,7 @@ import requests
 from value import bot
 
 
-def moikurs2(message):
+def moikurs(message):
     myheaders = {}
     myheaders['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
     source = requests.get("https://siteapi.vtb.ru/api/currencyrates/table?category=3&type=1", headers=myheaders)
@@ -27,7 +27,7 @@ def moikurs2(message):
     return x
 
 
-def moikurs(message):
+def moikurs2(message):
     myheaders = {}
     myheaders['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
     source = requests.get("https://ru.myfin.by/bank/vtb/currency", headers=myheaders)
