@@ -2,9 +2,14 @@
 
 import telebot
 from ipcalc import mask2cc, perevod10cc
-
-bot = telebot.TeleBot('5732121098:AAE1_OAVqc-FSy3IcnK11eshySPqDnuoNGc')
-filename = '/events.pkl'
+#Your bot id
+bot = telebot.TeleBot('')
+#Path for Napominalka
+filename = '/home/events.pkl'
+#Path for Parseradresov and chromium driver
+selenpath = '/home/index_selen.html'
+chromepath='/home/chromedriver'
+#Help
 text_help = 'Введите напоминание в формате:\n' \
             '<Время и Дата> <Событие>\n' \
             'Дата: (d)d.(/)(m)m\n' \
