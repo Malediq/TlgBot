@@ -11,7 +11,8 @@ from math import ceil
 
 
 cities = {
-    'Хабаровск': 'khabarovsk'
+    'Хабаровск': 'khabarovsk',
+    'Владивосток': 'vladivostok'
 }
 
 list = []
@@ -49,24 +50,51 @@ def check_dist(adr1, adr2):
 def get_start_url(message):
     #get start page url, find in message distance limit and address
     data = re.split(r'[,]', message)
-    city = cities[data[0]]
+
     adr = data[1].lstrip() + ' ' + data[0]
+
     km = re.findall(r'\d{1,3}', data[2])
     km = km[0]
-    url = 'https://www.farpost.ru/'
-    if re.search(r'посуточно', message):
-        urlp = url + city + '/realty/rent-apartment/?flatType%5B%5D=1&flatType%5B%5D=2&flatType%5B%5D=3&flatType%5B%5D=4'
+
+    if re.search(r'по цене', message):
+        price = True
     else:
-        url = url + city + '/realty/rent_flats/'
-        if re.search(r'животное|с животными|собака|кошка', message):
-            urlp = url + '?animalsAllowed=1'
-            if re.search(r'квартира', message):
-                urlp += '&flatType%5B%5D=1&flatType%5B%5D=2&flatType%5B%5D=3&flatType%5B%5D=4'
-        else:
-            urlp = url
-            if re.search(r'квартира', message):
-                urlp += '?flatType%5B%5D=1&flatType%5B%5D=2&flatType%5B%5D=3&flatType%5B%5D=4'
-    return urlp, km, adr
+        price = False
+
+    frp = 'https://www.farpost.ru/'
+    city = cities[data[0]]
+    #Предложение
+    agency2 = 'agentType%5B%5D=agencyFee&'  # агенство с комиссией
+    agency1 = 'agentType%5B%5D=agencyNoFee&'  # агенство без комиссии
+    personal = 'agentType%5B%5D=privatePerson&' #от собственника
+    #Условия
+    pets = '' #можно ли с животными
+    #Вид квартиры
+    flat = 'flatType%5B%5D=1&flatType%5B%5D=2&flatType%5B%5D=3&flatType%5B%5D=4&' #квартира
+    gostinka = '' #гостинка
+    room = ''  # комната
+    # посуточно или на долгий срок
+    if re.search(r'посуточно', message):
+        rent = 'rent-apartment/?'
+    else:
+        rent = 'rent_flats/?'
+        flat += 'flatType%5B%5D=5&flatType%5B%5D=6&'
+    if re.search(r'без квартир', message):
+        flat = ''
+    if re.search(r'комната', message):
+        room = 'flatType%5B%5D=room&'
+    if re.search(r'гостинка', message):
+        gostinka = 'flatType%5B%5D=gostinka&'
+    if re.search(r'от собственника|собственник', message):
+        agency2 = ''
+        agency1 = ''
+    if re.search(r'оптимально', message):
+        agency2 = ''
+    if re.search(r'животное|с животными|собака|кошка', message):
+        pets = 'animalsAllowed=1&'
+
+    url = frp + city + '/realty/' + rent + agency2 + agency1 + personal + pets + flat + gostinka + room
+    return url, km, adr, price
 
 
 
@@ -90,8 +118,9 @@ def get_page(urlp):
     htmlw(ps, filepath)
 
 
-def get_infa(adr, km):
-    #get list in format: distance, address, rooms, price, link
+def get_infa(adr, km, price):
+    #get list in format: distance, price, address, rooms, link (default)
+    #get list in format: price, distance, address, rooms, link (if price = True)
     global list
     src = htmlr(filepath)
     soup = BeautifulSoup(src, "lxml")
@@ -109,7 +138,10 @@ def get_infa(adr, km):
         try:
             dist = check_dist(adr, adres)
             if dist <= int(km):
-                infa = f"{dist:.2f} км, {adres}, {kom}, {cena.get_text()}\n{ssyl}\n"
+                if price == True:
+                    infa = f"{cena.get_text()}, {dist:.2f} км, {adres}, {kom}\n{ssyl}\n"
+                else:
+                    infa = f"{dist:.2f} км, {cena.get_text()}, {adres}, {kom}\n{ssyl}\n"
                 list.append(infa)
         except: None
 
@@ -125,18 +157,18 @@ def kolvo_pr(filepath):
 
 
 def parseradr(message):
-    #get rent flats html
+    #get rent flats or aparments in radius
     global list
     bot.send_message(message.chat.id, 'Ожидайте милорд, ищу для Вас подходящие квартиры')
     starturl = get_start_url(message.text)
     url = starturl[0]
     adr = starturl[2]
     km = starturl[1]
+    price = starturl[3]
     get_page(url)
-    get_infa(adr, km)
-    print(starturl)
+    get_infa(adr, km, price)
     n = kolvo_pr(filepath)
-    url += '&page='
+    url += 'page='
     for i in range(2, n):
         bot.send_message(message.chat.id, 'Я не умер')
         urlp = url + str(i)

@@ -2,13 +2,15 @@
 
 import telebot
 from ipcalc import mask2cc, perevod10cc
-#Your bot id
+#Enter your bot id
 bot = telebot.TeleBot('')
-#Path for Napominalka
+#Path to Napominalka file
 filename = '/home/events.pkl'
-#Path for Parseradresov and chromium driver
+#Path to Parseradresov and chromium driver
 selenpath = '/home/index_selen.html'
 chromepath='/home/chromedriver'
+#Timedelta between hostserver and client
+td=7
 #Help
 text_help = 'Введите напоминание в формате:\n' \
             '<Время и Дата> <Событие>\n' \

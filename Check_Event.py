@@ -2,14 +2,14 @@
 
 import datetime
 from datetime import datetime, timedelta
-from value import bot, filename
+from value import bot, filename, td
 from Napominalka import save_obj, load_obj
 
 def check_events(messageid):
     now = str(datetime.now())
     ndatetimestr = now[0:16]
     now = datetime.strptime(ndatetimestr, '%Y-%m-%d %H:%M')
-    now = now + timedelta(hours=7)
+    now = now + timedelta(hours=td)
     nowh = now + timedelta(hours=1)
     nowd = now + timedelta(days=1)
     list = []
