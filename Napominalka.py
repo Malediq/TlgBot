@@ -19,13 +19,16 @@ def load_obj():
         return z
 
 def day_week(dwstring):
+    global td
     now = datetime.now()
-    now += timedelta(hours=td) #host server and client timedelta
+    now += timedelta(hours=td)
     dayn = now.weekday()
+    today = False
     if dwstring == 'завтра' or dwstring == 'Завтра':
         needd = dayn+1
     elif dwstring == 'сегодня' or dwstring == 'Сегодня':
         needd = dayn
+        today = True
     elif dwstring == 'пн' or dwstring == 'Пн' or dwstring == 'понедельник' or dwstring == 'Понедельник':
         needd = 0
     elif dwstring == 'вт' or dwstring == 'Вт' or dwstring == 'вторник' or dwstring == 'Вторник':
@@ -40,14 +43,14 @@ def day_week(dwstring):
         needd = 5
     elif dwstring == 'вс' or dwstring == 'Вс' or dwstring == 'воскресенье' or dwstring == 'Воскресенье':
         needd = 6
-    if dayn >= needd:
+    if dayn >= needd and today == False:
         needd += 7
     td = needd - dayn
     now += timedelta(days=td)
     return str(now)
 
 def add_event(message):
-    resultd = re.findall(r'\d{1,2}[./]\d{1,2}[./]\d{4}|\d{1,2}[./]\d{1,2}|завтра|Завтра|Понедельник|Вторник|Среда|Четверг|Пятница|Суббота|Воскресенье|понедельник|вторник|среда|четверг|пятница|суббота|воскресенье|пн|вт|ср|чт|пт|сб|вс|Пн|Вт|Ср|Чт|Пт|Сб|Вс', message.text)
+    resultd = re.findall(r'\d{1,2}[./]\d{1,2}[./]\d{4}|\d{1,2}[./]\d{1,2}|Сегодня|сегодня|завтра|Завтра|Понедельник|Вторник|Среда|Четверг|Пятница|Суббота|Воскресенье|понедельник|вторник|среда|четверг|пятница|суббота|воскресенье|пн|вт|ср|чт|пт|сб|вс|Пн|Вт|Ср|Чт|Пт|Сб|Вс', message.text)
     if re.match(r'Сегодня|сегодня|завтра|Завтра|Понедельник|Вторник|Среда|Четверг|Пятница|Суббота|Воскресенье|понедельник|вторник|среда|четверг|пятница|суббота|воскресенье|пн|вт|ср|чт|пт|сб|вс|Пн|Вт|Ср|Чт|Пт|Сб|Вс', resultd[0]):
         mydate = day_week(resultd[0])
         myyear = mydate[0:4]
@@ -62,20 +65,21 @@ def add_event(message):
         mydate = re.split(r'[./]', resultd[0])
         myyear = str(datetime.now())[0:4]
         mymounth = mydate[1]
-        if int(mymounth) < 10:
+        if int(mymounth) < 10 and mymounth[0] != '0':
             mymounth = '0' + mymounth
         myday = mydate[0]
-        if int(myday) < 10:
+        if int(myday) < 10 and myday[0] != '0':
             myday = '0' + myday
-    else: None
+    else:
+        None
     # ищем время myminute, myhour
     resultt = re.findall(r'\d{1,2}[:-]\d{1,2}', message.text)
     mytime = re.split(r'[:-]', resultt[0])
     myhour = mytime[0]
-    if int(myhour) < 10:
+    if int(myhour) < 10 and myhour[0] != '0':
         myhour = '0' + myhour
     myminute = mytime[1]
-    if int(myminute) < 10:
+    if int(myminute) < 10 and myminute[0] != '0':
         myminute = '0' + myminute
     resdel = re.split(resultd[0], message.text)
     resdel = ' '.join(resdel)
@@ -87,7 +91,7 @@ def add_event(message):
     except: None
     try:
         bot.send_message(message.chat.id, f'Событие {delo.lstrip()} добавлено на {myday}/{mymounth}/{myyear} в {myhour}:{myminute}')
-        list.append(myyear + "-" + mymounth + "-" + myday + " " + myhour + ":" + myminute + "\n" + delo.lstrip())
+        list.append(myyear + "-" + mymounth + "-" + myday + " " + myhour + ":" + myminute + "  " + delo.lstrip())
         list = sorted(list)
         save_obj(list)
     except: None
