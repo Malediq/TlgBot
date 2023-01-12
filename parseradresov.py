@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 import re
-import lxml
 from value import bot, selenpath as filepath, chromepath
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -58,7 +57,7 @@ def get_start_url(message):
     km = re.findall(r'\d{1,3}', data[2])
     km = km[0]
 
-    if re.search(r'по цене', message):
+    if re.search(r'по цене|цена', message):
         price = True
     else:
         price = False
@@ -184,7 +183,7 @@ def parseradr(message):
         bot.send_message(message.chat.id, 'Я не умер')
         urlp = url + str(i)
         get_page(urlp)
-        get_infa(adr, km)
+        get_infa(adr, km, price)
     list = sorted(list)
     bot.send_message(message.chat.id, 'Квартиры найдены и отсортированы, милорд')
     for i in list:
