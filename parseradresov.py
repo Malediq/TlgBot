@@ -75,6 +75,9 @@ def get_start_url(message):
     flat = 'flatType%5B%5D=1&flatType%5B%5D=2&flatType%5B%5D=3&flatType%5B%5D=4&' #квартира
     gostinka = '' #гостинка
     room = ''  # комната
+    #Цена квартиры
+    pricemax = ''
+    pricemin = ''
     # посуточно или на долгий срок
     if re.search(r'посуточно', message):
         rent = 'rent-apartment/?'
@@ -83,6 +86,8 @@ def get_start_url(message):
         flat += 'flatType%5B%5D=5&flatType%5B%5D=6&'
     if re.search(r'без квартир', message):
         flat = ''
+        room = 'flatType%5B%5D=room&'
+        gostinka = 'flatType%5B%5D=gostinka&'
     if re.search(r'комната', message):
         room = 'flatType%5B%5D=room&'
     if re.search(r'гостинка', message):
@@ -94,8 +99,12 @@ def get_start_url(message):
         agency2 = ''
     if re.search(r'животное|с животными|собака|кошка', message):
         pets = 'animalsAllowed=1&'
-
-    url = frp + city + '/realty/' + rent + agency2 + agency1 + personal + pets + flat + gostinka + room
+    if re.search(r'\d[-]\d', message):
+        myprice = re.findall(r'\d*[-]\d*', message)
+        mmp = re.split(r'[-]', myprice[0])
+        pricemax = 'price_max=' + mmp[1] + '&'
+        pricemin = 'price_min=' + mmp[0] + '&'
+    url = frp + city + '/realty/' + rent + agency2 + agency1 + personal + pets + flat + gostinka + room + pricemax + pricemin
     return url, km, adr, price
 
 
