@@ -110,7 +110,6 @@ def get_start_url(message):
 
 def get_page(urlp):
     #get html page
-    global chromepath
     ps=''
     driver = webdriver.Chrome(
         executable_path=chromepath,
