@@ -2,7 +2,7 @@
 
 import pickle
 import re
-from value import bot, filename, td
+from value import bot, filename, timed
 from datetime import datetime, timedelta
 
 
@@ -19,9 +19,8 @@ def load_obj():
         return z
 
 def day_week(dwstring):
-    global td
     now = datetime.now()
-    now += timedelta(hours=td)
+    now += timedelta(hours=timed)
     dayn = now.weekday()
     today = False
     if dwstring == 'завтра' or dwstring == 'Завтра':
