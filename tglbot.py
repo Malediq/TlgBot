@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import re
 import time
-from value import bot
+from value import bot, help, text_maski
 from MoiKurs import moikurs
 from Napominalka import add_event, my_events, rm_event
 from telebot import types
@@ -11,7 +11,7 @@ from parseradresov import parseradr
 
 @bot.message_handler(commands=["start"])
 def start(m, res=False):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
     item1 = types.KeyboardButton("Мой курс")
     item2 = types.KeyboardButton("Мои события")
     item3 = types.KeyboardButton("Помощь")
@@ -31,7 +31,7 @@ def handle_text(message):
             if elapsed < 1:
                 time.sleep(1 - elapsed)
     elif message.text == 'Помощь':
-        bot.send_message(message.chat.id, text_help)
+        help(message)
     elif message.text == 'Мои события':
         try:
             my_events(message)
