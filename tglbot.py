@@ -5,7 +5,6 @@ from value import bot, help, text_maski
 from MoiKurs import moikurs
 from Napominalka import add_event, my_events, rm_event
 from telebot import types
-from value import text_help, text_maski
 from ipcalc import ipcalc
 from parseradresov import parseradr
 
