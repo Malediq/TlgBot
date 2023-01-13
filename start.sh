@@ -13,7 +13,7 @@ pip3 install bs4
 pip3 install lxml
 pip3 install selenium
 pip3 install geopy
-sed -i 's|<PATH>|$Filepath|' bot.service
+sed -i "s|<PATH>|${Filepath}|" bot.service
 cp bot.service /etc/systemd/system/bot.service
 chmod 664 /etc/systemd/system/bot.service
 sed -i "s|/home|${Filepath}|g" value.py
