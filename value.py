@@ -12,12 +12,12 @@ filename = '/home/events.pkl'
 selenpath = '/home/index_selen.html'
 chromepath='/home/chromedriver'
 #Timedelta between hostserver and client
-timed=
+timed=0
 #Help
 #Enter your dollar exchange rate
-kp=
+kp=0
 #Enter number of dollars
-dollarsumm=
+dollarsumm=1
 
 def help(message):
     moik =  '\U0001F4B0 Мой курс \U0001F4B0 \n\n'\
