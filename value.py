@@ -5,19 +5,19 @@ from ipcalc import mask2cc, perevod10cc
 #Enter your bot id
 bot = telebot.TeleBot('')
 #Enter your chat id
-chatid=0
+chatid=
 #Path to Napominalka file
 filename = '/home/events.pkl'
 #Path to Parseradresov and chromium driver
 selenpath = '/home/index_selen.html'
 chromepath='/home/chromedriver'
 #Timedelta between hostserver and client
-timed=7
+timed=
 #Help
 #Enter your dollar exchange rate
-kp = 65.72
+kp=
 #Enter number of dollars
-dollarsumm = 1111
+dollarsumm=
 
 def help(message):
     moik =  '\U0001F4B0 Мой курс \U0001F4B0 \n\n'\
