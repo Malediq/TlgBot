@@ -2,7 +2,7 @@
 
 import datetime
 from datetime import datetime, timedelta
-from value import bot, timed
+from value import bot, timed, chatid
 from Napominalka import save_obj, load_obj
 
 def check_events(messageid):
@@ -33,4 +33,4 @@ def check_events(messageid):
             list.remove(date)
             save_obj(list)
 
-check_events(560103290)
+check_events(chatid)

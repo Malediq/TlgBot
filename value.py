@@ -4,6 +4,8 @@ import telebot
 from ipcalc import mask2cc, perevod10cc
 #Enter your bot id
 bot = telebot.TeleBot('')
+#Enter your chat id
+chatid=0
 #Path to Napominalka file
 filename = '/home/events.pkl'
 #Path to Parseradresov and chromium driver
