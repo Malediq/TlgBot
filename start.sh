@@ -16,10 +16,10 @@ pip3 install geopy
 sed -i 's|<PATH>|$Filepath|' bot.service
 cp bot.service /etc/systemd/system/bot.service
 chmod 664 /etc/systemd/system/bot.service
-sed -i 's|/home|$Filepath|g' value.py
+sed -i "s|/home|${Filepath}|g" value.py
 echo "Enter your Bot id"
 read Botid
-sed -i 's|telebot.TeleBot('')|telebot.TeleBot('$Botid')|' value.py
+sed -i "s|telebot.TeleBot('')|telebot.TeleBot('${Botid}')|" value.py
 service bot start
 service bot status
 google-chrome-stable --version
