@@ -13,15 +13,15 @@ read kp
 echo "Enter number of dollars"
 read dollarsum
 if [ "$botid" != '' ]; then
-        sed -i "s|chatid=|chatid=${botid}|" value.py
+        sed -i "s|chatid=[a-zA-Z_]*|chatid=${botid}|" value.py
 fi
 if [ "$timed" != '' ]; then
-        sed -i "s|timed=0|timed=${timed}|" value.py
+        sed -i "s|timed=[a-zA-Z_]*|timed=${timed}|" value.py
 fi
 if [ "$kp" != '' ]; then
-        sed -i "s|kp=0|kp=${kp}|" value.py
+        sed -i "s|kp=[a-zA-Z_]*|kp=${kp}|" value.py
 fi
 if [ "$dollarsum" != '' ]; then
-        sed -i "s|dollarsumm=1|dollarsumm=${dollarsum}|" value.py
+        sed -i "s|dollarsumm=[a-zA-Z_]*|dollarsumm=${dollarsum}|" value.py
 fi
 service bot restart
